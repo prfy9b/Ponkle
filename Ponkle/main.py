@@ -14,12 +14,13 @@ player2keys = [False, False, False, False]
 player1pos = [[1, 30, 1]]
 player2pos = [[615, 150, 3]]
 ballpos = [300, 300]
-ballvel = [1, 1]
+ballvel = [-1, 1]
 for num in range(0, 6):
     player1pos.append([player1pos[num][0], player1pos[num][1] + 17, 1])
     player2pos.append([player2pos[num][0], player2pos[num][1] - 17, 3])
 UP, LEFT, DOWN, RIGHT = 0, 1, 2, 3
 xMAX, yMAX, xMIN, yMIN = 615, 452, 1, 1
+hasBounced = False
 
 player1 = pygame.image.load("sprites/player1.png")
 player2 = pygame.image.load("sprites/player2.png")
@@ -93,10 +94,22 @@ while running:
     screen.blit(ball, ballpos)
     ballpos[0] += ballvel[0]
     ballpos[1] += ballvel[1]
-    if(ballpos[0] > xMAX - 8 or ballpos[0] < xMIN - 10):
+    if(player1pos[0][2] == 1 and ballpos[0] <= player1pos[0][0] and ballpos[1] <= player1pos[5][1] and ballpos[1] >= player1pos[0][1]):
         ballvel[0] *= -1
+    if(player1pos[0][2] == 3 and ballpos[0] >= player1pos[0][0] - 17 and ballpos[1] >= player1pos[5][1] and ballpos[1] <= player1pos[0][1]):
+        ballvel[0] *= -1
+    if(ballpos[0] > xMAX - 8 or ballpos[0] < xMIN - 10):
+        if not hasBounced:
+            ballvel[0] *= -1
+            hasBounced = True
+        else:
+            hasBounced = False
     if(ballpos[1] > yMAX - 5 or ballpos[1] < yMIN - 10):
-        ballvel[1] *= -1
+        if not hasBounced:
+            ballvel[1] *= -1
+            hasBounced = True
+        else:
+            hasBounced = False
     pygame.display.flip()
 
     for ev in pygame.event.get():
