@@ -20,10 +20,6 @@ for num in range(0, 6):
     player2pos.append([player2pos[num][0], player2pos[num][1] - 17, 3])
 UP, LEFT, DOWN, RIGHT = 0, 1, 2, 3
 xMAX, yMAX, xMIN, yMIN = 615, 452, 1, 1
-usus, dsus, lsus, rsus = False, False, False, False
-acc = [0, 0]
-arrows = []
-badguys = [[640, 100]]
 
 player1 = pygame.image.load("sprites/player1.png")
 player2 = pygame.image.load("sprites/player2.png")
